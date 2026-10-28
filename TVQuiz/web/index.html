@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TV Quiz</title>
+    <style>
+      html, body { height: 100%; margin: 0; overflow: hidden; background: #0b1116; }
+      /*
+       * The app is always 1920x1080 and is scaled to the window by fit-to-window.ts.
+       * react-native-web layouts use flex: 1, so the root is a flex box.
+       */
+      #root {
+        position: absolute;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+      }
+      /* Focus is drawn by the app's own styles, not the browser outline. */
+      *:focus { outline: none; }
+      /*
+       * Every focusable item (react-native-web gives them tabindex="0") gets its own GPU layer.
+       * The focus zoom then only moves a ready picture instead of redrawing its pixels:
+       * at 4K this cut drawing per key press from ~20 ms to ~10 ms (under one 60 fps frame).
+       * Only on-screen parts of layers use memory, and far-away rails are unmounted.
+       */
+      [tabindex="0"] { will-change: transform; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

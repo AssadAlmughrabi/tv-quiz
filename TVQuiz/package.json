@@ -1,0 +1,66 @@
+{
+  "name": "TVQuiz",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "web": "webpack serve --mode development",
+    "build:web": "webpack --mode production",
+    "build:webos": "npm run build:web && cp webos/appinfo.json webos/*.png dist/web/ && ares-package dist/web -o dist --no-minify"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^3.1.1",
+    "@react-native-community/netinfo": "^12.0.1",
+    "@react-native/new-app-screen": "0.83.0",
+    "axios": "^1.20.0",
+    "react": "19.2.0",
+    "react-dom": "^19.2.0",
+    "react-native": "npm:react-native-tvos@0.83.0-0",
+    "react-native-device-info": "^15.0.2",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-sound": "^0.13.0",
+    "react-native-web": "^0.21.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/metro-config": "0.83.0",
+    "@react-native/typescript-config": "0.83.0",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "babel-loader": "^10.1.1",
+    "babel-plugin-module-resolver": "^5.0.3",
+    "html-webpack-plugin": "^5.6.8",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-native-dotenv": "^5.0.0",
+    "react-test-renderer": "19.2.0",
+    "typescript": "^5.8.3",
+    "webpack": "^5.112.2",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "overrides": {
+    "@react-native-async-storage/async-storage": {
+      "react-native": "$react-native"
+    },
+    "@react-native-community/netinfo": {
+      "react-native": "$react-native"
+    },
+    "react-native-device-info": {
+      "react-native": "$react-native"
+    }
+  }
+}

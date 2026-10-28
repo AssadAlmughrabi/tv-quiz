@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project: TV Quiz</title><style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#14202b;--mute:#5b6b7a;--line:#d9e0e6;--acc:#0b6e8a;--acc-soft:#e1f1f6;--done:#e9f5ec;--warn:#fff4dc;--warn-ink:#6b4a00}
+:root:not([data-theme=light]){}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#10171d;--card:#18222b;--ink:#e8eef3;--mute:#9fb0be;--line:#2a3743;--acc:#4cc2e0;--acc-soft:#173542;--done:#16301f;--warn:#3a2f10;--warn-ink:#f3d58a}}
+:root[data-theme=dark]{--bg:#10171d;--card:#18222b;--ink:#e8eef3;--mute:#9fb0be;--line:#2a3743;--acc:#4cc2e0;--acc-soft:#173542;--done:#16301f;--warn:#3a2f10;--warn-ink:#f3d58a}
+*{box-sizing:border-box}
+html{height:100%;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI","Noto Sans",system-ui,-apple-system,Helvetica,Arial,sans-serif}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 20px}
+.bar{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.track{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--acc);transition:width .2s}
+.pct{font-weight:700;min-width:5.5em;text-align:right;font-variant-numeric:tabular-nums}
+main{max-width:760px;margin:0 auto;padding:28px 20px 60px}
+h1{font:700 2rem/1.15 Georgia,"Iowan Old Style","Times New Roman",serif;margin:0 0 8px}
+.sub{color:var(--mute);margin:0 0 28px;max-width:60ch}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:0 0 20px}
+h2{font:700 1.2rem/1.3 Georgia,"Iowan Old Style",serif;margin:0 0 6px}
+ul{list-style:none;margin:10px 0 0;padding:0}
+li label{display:flex;gap:12px;align-items:flex-start;padding:9px 8px;border-radius:8px;cursor:pointer}
+li label:hover{background:var(--acc-soft)}
+li input{width:20px;height:20px;margin-top:2px;accent-color:var(--acc);flex:none}
+li.done label span{color:var(--mute);text-decoration:line-through}
+li.done label{background:var(--done)}
+code{font:.88em ui-monospace,Consolas,monospace;background:var(--acc-soft);padding:1px 5px;border-radius:4px}
+.tag{font-size:.78rem;border:1px solid var(--line);border-radius:10px;padding:0 7px;margin-left:8px;color:var(--mute);white-space:nowrap}
+.tag.opt{border-color:var(--warn-ink);color:var(--warn-ink)}
+.q{margin:6px 0 0;padding-left:20px;color:var(--mute);list-style:disc}
+h3{font-size:.95rem;margin:14px 0 0;color:var(--mute)}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--mute);font-size:.9rem;margin-top:8px}
+button{font:inherit;background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+@media(max-width:520px){h1{font-size:1.6rem}section{padding:14px}}
+</style></head>
+<body><header class="top"><div class="bar"><div class="track"><div class="fill"></div></div><div class="pct">0 / 0</div></div></header>
+<main><h1>Project: TV Quiz</h1><p class="sub">Requirements only. Build it, then tick each one when it works.</p>
+<section><h2>Brief</h2><p style="margin:6px 0">Build a quiz game for the TV. Users pick a category, answer timed multiple-choice questions, see their score and compare it on a leaderboard, using only the remote.</p><p style="margin:6px 0"><b>Targets:</b> Android TV and Apple TV (native app), LG webOS and Samsung Tizen (web build), all from one codebase.</p><p style="margin:6px 0"><b>Data:</b> Questions, scores and the leaderboard come from a mock API that you create. No real backend is needed.</p><p style="margin:6px 0"><b>Rule:</b> a requirement counts as done only when it works on every target and is checked on a real TV where possible.</p></section>
+<div id="root"></div>
+<footer><span>Your ticks are saved in this browser.</span><button id="reset" type="button">Reset ticks</button></footer></main>
+<script>
+const D=[["Screens and features", ["Home: the daily quiz featured at the top and rows of categories beneath it", "Category: the quizzes of one category in a grid", "Question: one question with four answer choices and a countdown timer", "Result: the score, the number of correct answers, and a review of every question", "Leaderboard: the top scores of a quiz, with the player's own position", "Settings: nickname entered with the remote alone, language, sound and an About screen"], []], ["Remote and focus", ["Every screen is fully usable with arrows, Enter and Back only", "Every screen opens with focus on a sensible item, and focus is never lost or trapped at any moment, including when choices lock after an answer and the next question appears", "Returning to Home or a category after a quiz restores focus to the quiz that was played, even if the list refreshed in between", "The four answer choices can be reached with the arrows, and holding or double-pressing Enter never submits an answer twice or skips a question", "Back during a question opens a quit confirmation: the timer is paused, focus stays inside, Back closes it, and focus returns to where it was", "Back has one predictable result on every screen (question, quit confirmation, result, Home), and pressing it twice quickly never exits by accident", "When the timer runs out the quiz moves on without losing focus, even if a key is held or a dialog is open"], []], ["Layout and visual design", ["Designed for 1920x1080 and correct at 720p and 4K", "No important content falls inside the overscan margins", "Focused, selected, correct and wrong answers can be told apart without relying on colour alone, and the focus highlight is fully visible on every choice", "Questions and answers are readable from the sofa over any background or question image, bright or dark", "Category rows show part of the next card, and cards with different artwork shapes line up in their rows", "Nothing moves on screen while question images load or when the correct and wrong feedback appears", "Very long and very short questions and answers never break the layout; a screen reader announces the question and then each choice as one item"], []], ["States and resilience", ["Every screen that loads data has loading, empty, error and offline states, each with a focusable action", "A category with no quizzes shows a clear empty state", "A question image that fails to load shows a placeholder while the quiz continues", "An unexpected error in one row or one screen is contained and shows a message, and the rest of the app keeps working", "If the connection is lost during a quiz, the player is told clearly and the score is not lost, it is submitted when the connection returns, and a request that never answers ends with a message", "After Home or standby and a return, the quiz is paused with the timer stopped, the progress is valid and focus is not lost"], []], ["Performance", ["A written performance budget (startup time, key-to-focus delay, memory) is met on the weakest real device in a release build", "A quiz of 100 questions with images loads and plays smoothly, and memory stays within the budget", "A two-hour session of back-to-back quizzes shows no memory growth", "The countdown animates smoothly while answering still feels immediate on the weakest device"], []], ["Platform and data", ["One codebase builds the native and the web targets, and platform differences stay out of the feature screens", "Categories and quizzes seen before appear instantly on reopen and then refresh, and the cache never shows content in the wrong language", "A link opens a specific quiz or category directly, whether the app is closed or already running", "English and Arabic are supported, including the quiz content, with correct right-to-left layout and focus direction, dates and numbers formatted per language, and a language change in Settings applies without a restart", "About shows the device model, OS version and app version on every target", "The app works on the oldest supported web engine, whatever features it lacks"], []], ["Quality and debugging", ["Written key-sequence checks and a full focus walk of every screen pass on every target", "A written support policy and test matrix (platforms, OS versions, device tiers) are executed, including 720p, 1080p, 4K and the oldest supported web engine", "When a failure happens on a TV you cannot touch, logs and crash reports show the app version, the device and the recent key presses"], []]];
+const KEY='tv-project-quiz';let saved={};
+try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const root=document.getElementById('root');let n=0;
+D.forEach(([t,items,qs])=>{const s=document.createElement('section');
+let h='<h2>'+t+'</h2><ul>';
+items.forEach(i=>{n++;h+='<li><label><input type="checkbox" id="c'+n+'"><span>'+i+'</span></label></li>'});
+h+='</ul>';
+if(qs.length){h+='<h3>Explain it out loud</h3><ul class="q">'+qs.map(q=>'<li>'+q+'</li>').join('')+'</ul>'}
+s.innerHTML=h;root.appendChild(s)});
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function update(){const k=boxes.filter(b=>b.checked).length;
+document.querySelector('.fill').style.width=(k/boxes.length*100)+'%';
+document.querySelector('.pct').textContent=k+' / '+boxes.length;
+boxes.forEach(b=>b.closest('li').classList.toggle('done',b.checked));
+const s={};boxes.forEach(b=>{if(b.checked)s[b.id]=1});
+try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+boxes.forEach(b=>{b.checked=!!saved[b.id];b.addEventListener('change',update)});
+document.getElementById('reset').onclick=()=>{if(confirm('Clear all ticks on this page?')){boxes.forEach(b=>b.checked=false);update()}};
+update();
+</script></body></html>
